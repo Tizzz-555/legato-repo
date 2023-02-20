@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title%}
+Signup
+{% endblock %}
+
+{% block main %}
+<div class="container flex-wrap: nowrap">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Sign Up
+        </div>
+        <div class="card-body">
+          <form action="/signup" method="post">
+            <div class="mb-3">
+              <input class="form-control" autocomplete="off" autofocus="" name="username" placeholder="Username"
+                type="text" title="Please enter a username" required />
+            </div>
+            <div class="mb-3">
+              <input class="form-control" autocomplete="off" autofocus="" name="email" placeholder="Email" type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+            </div>
+            <div class="mb-3">
+              <input class="form-control" name="password" placeholder="Password" type="password"
+                pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}|[\]:'<>,.?/~`-]).{8,}"
+                title="Must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long"
+                required />
+            </div>
+            <div class="mb-3">
+              <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password" required />
+            </div>
+
+            <button class="btn btn-primary" type="submit"
+              style="display: flex; justify-content: center; margin: auto;">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+{% endblock %}

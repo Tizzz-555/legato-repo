@@ -1,0 +1,12 @@
+body {
+    background: #dae0e6 !important;
+    margin-top: 75px !important;
+    }
+
+@media screen and (min-width: 991px){
+.mx-2 .my-auto .d-inline .w-100 {
+   margin-left: 100px !important;
+   margin-right: 100px !important;
+   }
+}
+

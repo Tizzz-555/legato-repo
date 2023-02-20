@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title%}
+Login
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card" style="margin: auto">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+          <form method="POST">
+            <div class="mb-3">
+              <label for="email">Email Address</label>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Enter Email"
+                title="Please enter a valid email" required />
+            </div>
+            <div class="mb-3">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+                title="Please enter a valid password" required />
+            </div>
+            <button class="btn btn-primary" type="submit" style="display: flex; justify-content: center; margin: auto">
+              Log In
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+{% endblock %}
