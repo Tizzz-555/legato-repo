@@ -6,6 +6,7 @@ from .config import SECRET_KEY
 
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = SECRET_KEY
@@ -32,3 +33,5 @@ def create_app():
         db.create_all()
 
     return app
+
+# source ENV/bin/activate
