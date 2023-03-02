@@ -29,7 +29,7 @@ def create_app():
         return User.query.get(int(id))
 
     with app.app_context():
-        from .models import User, Post, Comment
+        from .models import User, Post, Comment, Like
         db.create_all()
 
     return app

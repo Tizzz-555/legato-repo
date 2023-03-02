@@ -17,15 +17,22 @@ Index
           <!-- Header section -->
 
           <div class="card-header">
-            <strong>
-              <button class="btn btn-light btn-sm">
-                <i class="fas fa-arrow-up"></i>
-              </button>
-              <span>{{ post.votes }}</span>
-              <button class="btn btn-light btn-sm">
-                <i class="fas fa-arrow-down"></i>
-              </button>
-            </strong>le/Auditions ·<span class="text-muted" style="font-size: 10pt;"> Posted by <a
+
+            {% if user.id in post.dislikes|map(attribute="author_id")|list %}
+            <a href="/dislike-post/{{post.id}}"><i class="fa-solid fa-volume-xmark"></i></a>
+            {% else %}
+            <a href="/dislike-post/{{post.id}}"><i class="fa-solid fa-volume-off"></i></a>
+            {% endif %}
+
+            <span id="counter">{{ post.likes|length - post.dislikes|length}}</span>
+
+            {% if user.id in post.likes|map(attribute="author_id")|list %}
+            <a href=" /like-post/{{post.id}}"><i class="fa-solid fa-volume-high"></i></a>
+            {% else %}
+            <a href=" /like-post/{{post.id}}"><i class="fa-solid fa-volume-low"></i></a>
+            {% endif %}
+
+            <strong id="sub">le/Auditions ·</strong><span class="text-muted" style="font-size: 10pt;"> Posted by <a
                 href="/posts/{{post.user.username}}">{{post.user.username}}</a>
               {{ post.date_created }}</span>
           </div>
@@ -52,7 +59,7 @@ Index
                     </div>
                     <div>
                       <small class="text-muted"> {{comment.date_created}}</small>
-                      {% if user.id == comment.author or user.id == post.author %}
+                      {% if user.id == comment.author_id or user.id == post.author_id %}
                       <div class="btn-group dropdown">
                         <ul class="dropdown-menu">
                           <li>
@@ -79,7 +86,7 @@ Index
                 class="fas fa-comment"></i>
               {{post.comments|length}} Comments</a>
             <a href="" class="btn btn-light btn-sm"><i class="fas fa-share"></i> Share</a>
-            {% if user.id == post.author %}
+            {% if user.id == post.author_id %}
             <div class="btn-group dropdown">
               <ul class="dropdown-menu">
                 <li>
