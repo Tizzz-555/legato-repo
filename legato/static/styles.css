@@ -18,3 +18,26 @@ body {
 #sub {
   margin-left: 11px;
 }
+
+#side-card {
+  position:sticky; 
+  top: 55px;
+}
+
+#posts {
+  padding-top: 20px;
+}
+
+.navbar {
+  --bs-navbar-padding-y: 0;
+}
+.navbar-brand {
+  width: 150px;
+  font-size: 24px;
+}
+
+.navbar-brand img {
+  height: 40px;
+  float: left;
+  margin-right: 7px;
+}
