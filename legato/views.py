@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like, Dislike
 from . import db
@@ -101,7 +101,7 @@ def delete_comment(comment_id):
     return redirect(url_for("views.index"))
 
 
-@views.route("/like-post/<post_id>", methods=["GET"])
+@views.route("/like-post/<post_id>", methods=["POST"])
 @login_required
 def like(post_id):
     # When a user clicks a clicked icon: you remove any existing entry of same userid and postid
@@ -112,7 +112,7 @@ def like(post_id):
         author_id=current_user.id, post_id=post_id).first()
 
     if not post:
-        flash("Post does not exist", category="error")
+        return jsonify({'error': "Post does not exist"}, 400)
     elif not like and not dislike:
         like = Like(author_id=current_user.id, post_id=post_id)
         db.session.add(like)
@@ -127,10 +127,10 @@ def like(post_id):
         db.session.delete(like)
         db.session.commit()
 
-    return redirect(url_for("views.index"))
+    return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author_id, post.likes)})
 
 
-@views.route("/dislike-post/<post_id>", methods=["GET"])
+@views.route("/dislike-post/<post_id>", methods=["POST"])
 @login_required
 def dislike(post_id):
     # When a user clicks a clicked icon: you remove any existing entry of same userid and postid
@@ -141,7 +141,7 @@ def dislike(post_id):
         author_id=current_user.id, post_id=post_id).first()
 
     if not post:
-        flash("Post does not exist", category="error")
+        return jsonify({'error': "Post does not exist"}, 400)
     elif not dislike and not like:
         dislike = Dislike(author_id=current_user.id, post_id=post_id)
         db.session.add(dislike)
@@ -156,4 +156,4 @@ def dislike(post_id):
         db.session.delete(dislike)
         db.session.commit()
 
-    return redirect(url_for("views.index"))
+    return jsonify({"dislikes": len(post.dislikes), "disliked": current_user.id in map(lambda x: x.author_id, post.dislikes)})
