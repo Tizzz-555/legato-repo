@@ -34,7 +34,7 @@ Index
 
             <strong id="sub">le/Auditions ·</strong><span class="text-muted" style="font-size: 10pt;"> Posted by <a
                 href="/posts/{{post.user.username}}">{{post.user.username}}</a>
-              {{ post.date_created }}</span>
+              {{ post.time_passed }}</span>
           </div>
 
           <!-- Body section -->
@@ -58,7 +58,7 @@ Index
                       <a href="/posts/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
                     </div>
                     <div>
-                      <small class="text-muted"> {{comment.date_created}}</small>
+                      <small class="text-muted"> {{comment.time_passed}}</small>
                       {% if user.id == comment.author_id or user.id == post.author_id %}
                       <div class="btn-group dropdown">
                         <ul class="dropdown-menu">

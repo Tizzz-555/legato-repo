@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like, Dislike
 from . import db
+from .helpers import from_now, hot
+from datetime import datetime
+
 
 views = Blueprint("views", __name__)
 
@@ -11,8 +14,26 @@ views = Blueprint("views", __name__)
 @login_required
 def index():
     posts = Post.query.all()
+    comments = Comment.query.all()
+    now = datetime.utcnow()
 
-    return render_template("index.html", user=current_user, posts=posts)
+    for post in posts:
+        date = post.date_created
+        ups = len(post.likes)
+        downs = len(post.dislikes)
+        post.hot_score = hot(ups, downs, date)
+
+    sorted_posts = sorted(posts, key=lambda post: post.hot_score, reverse=True)
+
+    for post in sorted_posts:
+        time_diff = now - post.date_created
+        post.time_passed = from_now(time_diff)
+
+    for comment in comments:
+        time_diff = now - comment.date_created
+        comment.time_passed = from_now(time_diff)
+
+    return render_template("index.html", user=current_user, posts=sorted_posts)
 
 
 @views.route("/create-post", methods=['GET', 'POST'])
