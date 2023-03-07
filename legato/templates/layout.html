@@ -17,15 +17,18 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><img src="/static/Legato-logos_transparent.png"></a>
-      <!--form class="mx-2 my-auto d-inline w-100">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      </form-->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
         aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbar">
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <form class="d-flex" role="search" style="margin-left: auto;
+        margin-right: auto;">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-item nav-link" href="/index"><i class="fa-solid fa-house"></i> Home</a>
@@ -37,8 +40,9 @@
           <li class="nav-item">
             <a class="nav-item nav-link" href="/logout">Logout</a>
           </li>
+          <div style="margin-left: 30px;border-left-width: 3px;border-left-style: solid;margin-right: 30px;"></div>
           <li class="nav-item">
-            <a class="nav-item nav-link" href="/posts/{{user.username}}">{{user.username}}</a>
+            <a class="nav-item nav-link" id="nav-username" href="/posts/{{user.username}}">{{user.username}}</a>
           </li>
           {% else %}
           <li class="nav-item">
@@ -50,6 +54,7 @@
 
           {% endif %}
         </ul>
+
       </div>
     </div>
   </nav>

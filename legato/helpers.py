@@ -43,39 +43,50 @@ def validate_password(password):
 
 
 def from_now(time_diff):
-
+    # calculate the minutes dividing total seconds passed from post creation by 60
     minutes = int(time_diff.total_seconds() // 60)
 
     if minutes < 1:
         return "less than a minute ago"
+    # edge case "minute"
     if minutes == 1:
         return "1 minute ago"
     if minutes > 1 and minutes < 60:
         return f"{minutes} minutes ago"
 
+    # total minutes divided by 60 == hours
     hours = int(minutes // 60)
+    # edge case "hour"
     if hours == 1:
         return "1 hour ago"
     if hours > 1 and hours < 24:
         return f"{hours} hours ago"
 
+    # total hours divided by 24 == days
     days = int(hours // 24)
+    # edge case "day"
     if days == 1:
         return "1 day ago"
     if days > 1 and days < 31:
         return f"{days} days ago"
 
+    # total hours divided by 31 == months
     months = int(days // 31)
+    # edge case "month"
     if months == 1:
         return "one month ago"
     if months > 1 and months < 12:
         return f"{months} months ago"
 
+    # total months divided by 12 == years
     years = int(months // 12)
+    # edge case "year"
     if years == 1:
         return "1 year ago"
     if years > 1:
         return f"{years} years ago"
+
+# this is Reddit's hot algorithm to sort post by their rating combined to the date they were created
 
 
 def epoch_seconds(date):
