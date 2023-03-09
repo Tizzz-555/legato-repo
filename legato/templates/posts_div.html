@@ -19,11 +19,12 @@ Index
           <div class="card-header">
 
             {% if user.id in post.dislikes|map(attribute="author_id")|list %}
-            <a href="/dislike-post/{{post.id}}" style="padding-right: 0px;margin-right: 2px;"><i
-                class="fa-solid fa-volume-xmark" style="color:red"></i></a>
+            <a href="/dislike-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-right: 0px;margin-right: 2px;"><i class="fa-solid fa-volume-xmark"
+                style="color:red"></i></a>
             {% else %}
-            <a href="/dislike-post/{{post.id}}" style="padding-right: 8px;margin-right: 2px;"><i
-                class="fa-solid fa-volume-off"></i></a>
+            <a href="/dislike-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-right: 8px;margin-right: 2px;"><i class="fa-solid fa-volume-off"></i></a>
             {% endif %}
 
             <span id="counter"
@@ -32,14 +33,15 @@ Index
             </span>
 
             {% if user.id in post.likes|map(attribute="author_id")|list %}
-            <a href=" /like-post/{{post.id}}" style="padding-left: 8px;margin-left: 2px;"><i
-                class="fa-solid fa-volume-high" style="color:rgb(115, 212, 115)"></i></a>
+            <a href=" /like-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-left: 8px;margin-left: 2px;"><i class="fa-solid fa-volume-high"
+                style="color:rgb(115, 212, 115)"></i></a>
             {% else %}
-            <a href=" /like-post/{{post.id}}" style="padding-left: 8px;margin-left: 2px;"><i
-                class="fa-solid fa-volume-low"></i></a>
+            <a href=" /like-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-left: 8px;margin-left: 2px;"><i class="fa-solid fa-volume-low"></i></a>
             {% endif %}
 
-            <span style="position:absolute;margin-left: 30px;"><strong id="sub">le/Auditions ·</strong><span
+            <span style="position:relative;margin-left: 30px;"><strong id="sub">le/Auditions ·</strong><span
                 class="text-muted" style="font-size: 10pt;"> Posted by
                 <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
                 {{ post.time_passed }}</span></span>
@@ -48,7 +50,7 @@ Index
           <!-- Body section -->
 
           <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
+            <h4 class="card-title">{{ post.title }}</h4>
             <p class="card-text">{{ post.text }}</p>
             <br />
             <form class="input-group mb-3" id="comment" method="POST" action="/create-comment/{{post.id}}">
