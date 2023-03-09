@@ -19,28 +19,38 @@ Index
           <div class="card-header">
 
             {% if user.id in post.dislikes|map(attribute="author_id")|list %}
-            <i class="fa-solid fa-volume-xmark" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
+            <a href="/dislike-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-right: 0px;margin-right: 2px;"><i class="fa-solid fa-volume-xmark"
+                style="color:red"></i></a>
             {% else %}
-            <i class="fa-solid fa-volume-off" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
+            <a href="/dislike-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-right: 8px;margin-right: 2px;"><i class="fa-solid fa-volume-off"></i></a>
             {% endif %}
 
-            <span id="likes-count-{{post.id}}">{{ post.likes|length - post.dislikes|length}}</span>
+            <span id="counter"
+              class="counter {% if user.id in post.dislikes|map(attribute='author_id')|list %}disliked{% endif %}{% if user.id in post.likes|map(attribute='author_id')|list %}liked{% endif %}">
+              {{ post.likes|length - post.dislikes|length}}
+            </span>
 
             {% if user.id in post.likes|map(attribute="author_id")|list %}
-            <i class="fa-solid fa-volume-high" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i></a>
+            <a href=" /like-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-left: 8px;margin-left: 2px;"><i class="fa-solid fa-volume-high"
+                style="color:rgb(115, 212, 115)"></i></a>
             {% else %}
-            <i class="fa-solid fa-volume-low" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+            <a href=" /like-post/{{post.id}}" class="btn btn-light btn-sm"
+              style="padding-left: 8px;margin-left: 2px;"><i class="fa-solid fa-volume-low"></i></a>
             {% endif %}
 
-            <strong id="sub">le/Auditions ·</strong><span class="text-muted" style="font-size: 10pt;"> Posted by <a
-                href="/posts/{{post.user.username}}">{{post.user.username}}</a>
-              {{ post.date_created }}</span>
+            <span style="position:relative;margin-left: 30px;"><strong id="sub">le/Auditions ·</strong><span
+                class="text-muted" style="font-size: 10pt;"> Posted by
+                <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+                {{ post.time_passed }}</span></span>
           </div>
 
           <!-- Body section -->
 
           <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
+            <h4 class="card-title">{{ post.title }}</h4>
             <p class="card-text">{{ post.text }}</p>
             <br />
             <form class="input-group mb-3" id="comment" method="POST" action="/create-comment/{{post.id}}">
@@ -58,7 +68,7 @@ Index
                       <a href="/posts/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
                     </div>
                     <div>
-                      <small class="text-muted"> {{comment.date_created}}</small>
+                      <small class="text-muted"> {{comment.time_passed}}</small>
                       {% if user.id == comment.author_id or user.id == post.author_id %}
                       <div class="btn-group dropdown">
                         <ul class="dropdown-menu">
