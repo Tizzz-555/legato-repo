@@ -1,6 +1,6 @@
 .DS_store
-config.py
-pocopy.html
-index.js
+legato/config.py
+legato/templates/pocopy.html
+legato/static/index.js
+legato/__pycache__/
 __pycache__/
-.__pycache__/

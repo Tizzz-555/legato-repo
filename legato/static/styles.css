@@ -12,13 +12,11 @@ body {
 
 #counter {
   margin-right: 3px;
-  margin-left: 3px;"
+  margin-left: 3px;
 }
 
-
-
 #side-card {
-  position:sticky; 
+  position: sticky;
   top: 55px;
 }
 
@@ -41,7 +39,7 @@ body {
 }
 
 #navbarTogglerDemo02 {
-  margin-right: 0px; 
+  margin-right: 0px;
   margin-left: 65px;
   padding-left: 89px;
   padding-right: 0px;
@@ -72,7 +70,7 @@ body {
 }
 
 #nav-username {
-  color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   text-decoration: underline;
 }
 
