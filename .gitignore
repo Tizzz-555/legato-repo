@@ -2,3 +2,5 @@
 config.py
 pocopy.html
 index.js
+__pycache__/
+.__pycache__/
