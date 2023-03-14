@@ -1,9 +1,12 @@
+import os
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like, Dislike
-from . import db
+from . import db, UPLOAD_FOLDER
 from .helpers import from_now, hot
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import urllib.request
 
 # Create Blueprint object to handle all views routes
 views = Blueprint("views", __name__)
@@ -119,6 +122,44 @@ def posts(username):
     # Store only the posts from the current user in the posts variable
     posts = user.posts
     return render_template("posts.html", user=current_user, posts=posts, username=username)
+
+
+'''
+==================================================================
+==================================================================
+VIDEO
+==================================================================
+==================================================================
+'''
+
+
+@views.route("/upload-video/<post_id>", methods=["POST"])
+def upload_video(post_id):
+    file = request.files["file"]
+    if file:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(file_path)
+
+        post = Post.query.filter_by(id=post_id).first()
+        if post:
+            post.video = os.path.join('uploads', filename)
+            db.session.commit()
+            return redirect(url_for("views.index"))
+        else:
+            flash("Post does not exist", category="error")
+    else:
+        flash("No file selected for upload", category="error")
+        return redirect(url_for("views.index"))
+
+
+'''
+==================================================================
+==================================================================
+END OF VIDEO
+==================================================================
+==================================================================
+'''
 
 
 @views.route("/create-comment/<post_id>", methods=["POST"])

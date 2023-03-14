@@ -80,3 +80,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.textual-content {
+  border: solid rgb(57, 53, 53) 1px;
+  border-radius: 5px;
+  padding: 0 1em;
+}

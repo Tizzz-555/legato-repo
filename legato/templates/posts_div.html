@@ -50,9 +50,31 @@ Index
           <!-- Body section -->
 
           <div class="card-body">
-            <h4 class="card-title">{{ post.title }}</h4>
-            <p class="card-text">{{ post.text }}</p>
+            <div class="textual-content">
+              <h4 class="card-title">{{ post.title }}</h4>
+              <p class="card-text">{{ post.text }}</p>
+            </div>
             <br />
+            {% if post.video %}
+            <div style="margin: 10px auto;">
+              <video style="width: 600px;" controls="controls" preload="preload">
+                <source src="static/{{post.video}}" type="video/mp4">
+                </source>
+              </video>
+            </div>
+            {% endif %}
+
+            <form method="post" action="/upload-video/{{post.id}}" class="collapse" id="upload-{{post.id}}"
+              enctype="multipart/form-data">
+              <dl>
+                <p>
+                  <input type="file" id="file" name="file" autocomplete="off" required>
+                </p>
+              </dl>
+              <p>
+                <input type="submit" value="Upload">
+              </p>
+            </form>
             <form class="input-group mb-3" id="comment" method="POST" action="/create-comment/{{post.id}}">
               <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
               <button type="submit" class="btn btn-primary">Comment</button>
@@ -95,7 +117,8 @@ Index
             <a data-bs-toggle="collapse" href="#comments-{{post.id}}" class="btn btn-light btn-sm"><i
                 class="fas fa-comment"></i>
               {{post.comments|length}} Comments</a>
-            <a href="" class="btn btn-light btn-sm"><i class="fas fa-share"></i> Share</a>
+            <a data-bs-toggle="collapse" href="#upload-{{post.id}}" class="btn btn-light btn-sm"><i
+                class="fa-solid fa-video"></i> Upload video</a>
             {% if user.id == post.author_id %}
             <div class="btn-group dropdown">
               <ul class="dropdown-menu">

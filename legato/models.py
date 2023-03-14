@@ -25,6 +25,7 @@ class Post(db.Model):
     comments = db.relationship("Comment", backref="post", passive_deletes=True)
     likes = db.relationship('Like', backref='post', passive_deletes=True)
     dislikes = db.relationship('Dislike', backref='post', passive_deletes=True)
+    video = db.Column(db.String(100), nullable=True)
 
 
 class Comment(db.Model):
