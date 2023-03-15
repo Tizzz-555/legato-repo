@@ -15,12 +15,12 @@ def login():
     # login page to legato
     if request.method == 'POST':
         # get credentials from user
-        email = request.form.get("email")
+        username = request.form.get("username")
         password = request.form.get("password")
         # salt the password again so it matches the signup
         salted_pass = salt_password(password)
         # query the db looking for user
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(username=username).first()
         # if a matching user is found, check whether password is correct
         if user:
             if check_password_hash(user.password, salted_pass):

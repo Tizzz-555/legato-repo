@@ -6,7 +6,7 @@ from . import db, UPLOAD_FOLDER
 from .helpers import from_now, hot
 from datetime import datetime
 from werkzeug.utils import secure_filename
-import urllib.request
+
 
 # Create Blueprint object to handle all views routes
 views = Blueprint("views", __name__)
@@ -219,7 +219,7 @@ def like(post_id):
         author_id=current_user.id, post_id=post_id).first()
 
     if not post:
-        flash("Post does not exist", category="error")
+        return jsonify({'error': 'Post does not exist.'}, 400)
     # If we haven't cast a vote, add a like
     elif not like and not dislike:
         like = Like(author_id=current_user.id, post_id=post_id)
@@ -236,7 +236,7 @@ def like(post_id):
         db.session.delete(like)
         db.session.commit()
 
-    return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author_id, post.likes)})
+    return jsonify({"votes": len(post.likes) - len(post.dislikes), "liked": current_user.id in map(lambda x: x.author_id, post.likes)})
 
 
 @views.route("/dislike-post/<post_id>", methods=["POST"])
@@ -254,7 +254,7 @@ def dislike(post_id):
         author_id=current_user.id, post_id=post_id).first()
 
     if not post:
-        flash("Post does not exist", category="error")
+        return jsonify({'error': 'Post does not exist.'}, 400)
     # If we haven't cast a vote, add a dislike
     elif not dislike and not like:
         dislike = Dislike(author_id=current_user.id, post_id=post_id)
@@ -271,4 +271,4 @@ def dislike(post_id):
         db.session.delete(dislike)
         db.session.commit()
 
-    return jsonify({"dislikes": len(post.dislikes), "disliked": current_user.id in map(lambda x: x.author_id, post.dislikes)})
+    return jsonify({"votes": len(post.likes) - len(post.dislikes), "disliked": current_user.id in map(lambda x: x.author_id, post.dislikes)})
