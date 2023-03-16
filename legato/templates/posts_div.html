@@ -5,32 +5,71 @@ Index
 {% endblock %}
 
 {% block main %}
-<h1>{% block header %}Auditions{% endblock %}</h1>
-<div id="posts">
+<div class="posts">
+
   <div class="container">
     <div class="row">
       <h1>{% block header %}Auditions{% endblock %}</h1>
       <div class="col-sm-8">
-
         {% for post in posts %}
         <div class="card">
           <div class="card-header">
-            <strong>
-              <button class="btn btn-light btn-sm">
-                <i class="fas fa-arrow-up"></i>
-              </button>
-              <span>{{ post.votes }}</span>
-              <button class="btn btn-light btn-sm">
-                <i class="fas fa-arrow-down"></i>
-              </button>
-            </strong>le/Auditions ·<span class="text-muted" style="font-size: 10pt;"> Posted by <a
-                href="/posts/{{post.user.username}}">{{post.user.username}}</a>
-              <!-- maybe use "hours ago"? -->{{ post.date_created }}</span>
+
+            {% if user.id in post.dislikes|map(attribute="author_id")|list %}
+            <i class="fa-solid fa-volume-xmark" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
+            {% else %}
+            <i class="fa-solid fa-volume-off" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
+            {% endif %}
+
+
+            <span id="counter-{{post.id}}" class="counter">
+              {{ post.likes|length - post.dislikes|length}}
+            </span>
+
+
+            {% if user.id in post.likes|map(attribute="author_id")|list %}
+            <i class="fa-solid fa-volume-high" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+            {% else %}
+            <i class="fa-solid fa-volume-low" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+            {% endif %}
+
+            <span class="legend"><strong id="sub">le/Auditions ·</strong><span class="text-muted"
+                style="font-size: 10pt;"> Posted by
+                <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+                {{ post.time_passed }}</span></span>
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.text }}</p>
+            <div class="textual-content">
+              <h4 class="card-title">{{ post.title }}</h4>
+              <p class="card-text">{{ post.text }}</p>
+            </div>
             <br />
+            {% if post.video %}
+            <div class="video-container">
+              <video controls="controls" preload="preload">
+                <source src="static/{{post.video}}" type="video/mp4">
+                </source>
+              </video>
+            </div>
+            {% endif %}
+
+            <form method="post" action="/upload-video/{{post.id}}" class="collapse" id="upload-{{post.id}}"
+              enctype="multipart/form-data">
+              <dl>
+                <p>
+                  <input type="file" id="file" name="file" autocomplete="off" required>
+                </p>
+              </dl>
+              <p>
+                <input type="submit" value="Upload">
+              </p>
+            </form>
+            <form class="input-group mb-3" id="comment" method="POST" action="/create-comment/{{post.id}}">
+              <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
+              <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
+            <!-- Comments section -->
+
             <div class="collapse" id="comments-{{post.id}}">
               <div class="card">
                 <div class="card-body" id="comments-expanded-{post.id}">
@@ -40,8 +79,8 @@ Index
                       <a href="/posts/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
                     </div>
                     <div>
-                      <small class="text-muted"> {{comment.date_created}}</small>
-                      {% if user.id == comment.author or user.id == post.author %}
+                      <small class="text-muted"> {{comment.time_passed}}</small>
+                      {% if user.id == comment.author_id or user.id == post.author_id %}
                       <div class="btn-group dropdown">
                         <ul class="dropdown-menu">
                           <li>
@@ -74,9 +113,12 @@ Index
             </form>
           </div>
           <div class="card-footer text-muted">
-            <a href="" class="btn btn-light btn-sm"><i class="fas fa-comment"></i> 0 Comments</a>
-            <a href="" class="btn btn-light btn-sm"><i class="fas fa-share"></i> Share</a>
-            {% if user.id == post.author %}
+            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" class="btn btn-light btn-sm"><i
+                class="fas fa-comment"></i>
+              {{post.comments|length}} Comments</a>
+            <a data-bs-toggle="collapse" href="#upload-{{post.id}}" class="btn btn-light btn-sm"><i
+                class="fa-solid fa-video"></i> Upload video</a>
+            {% if user.id == post.author_id %}
             <div class="btn-group dropdown">
               <ul class="dropdown-menu">
                 <li>
@@ -93,14 +135,24 @@ Index
         <br />
         {% endfor %}
       </div>
-      {% block footer %}
-      <div class="col-sm-4">
-        <div class="card">
+
+      <!-- Side card section -->
+
+      {% block column %}
+      <div class="col-sm-4" style="display: block;">
+        <div class="card" id="side-card">
           <div class="card-body">
-            <h5 class="card-title">About Community</h5>
+            <h4 class="card-title">About Legato</h4>
             <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Maecenas tincidunt, nisl vel placerat sodales, odio leo tincidunt dui, ac rhoncus leo nisl at nunc.
+              Legato is the online platform where musicians preparing for orchestral auditions can receive feedback and
+              constructive criticism from their peers to improve their skills.
+            <p class="card-text">
+              Legato is a place to grow and improve your musicianship, not just another social network to use for
+              self-promotion or ego-boosting.
+            </p>
+            </p>
+            <p class="card-text"> Be a part of the Legato community by joining us today as we work together to achieve
+              artistic greatness.
             </p>
             <a href="/create-post" class="btn btn-primary btn-block">Create Post</a>
           </div>
