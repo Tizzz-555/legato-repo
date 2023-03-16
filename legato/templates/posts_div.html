@@ -13,6 +13,9 @@ Index
       <div class="col-sm-8">
         {% for post in posts %}
         <div class="card">
+
+          <!-- Header section -->
+
           <div class="card-header">
 
             {% if user.id in post.dislikes|map(attribute="author_id")|list %}
@@ -38,6 +41,9 @@ Index
                 <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
                 {{ post.time_passed }}</span></span>
           </div>
+
+          <!-- Body section -->
+
           <div class="card-body">
             <div class="textual-content">
               <h4 class="card-title">{{ post.title }}</h4>
@@ -98,20 +104,10 @@ Index
                 </div>
               </div>
             </div>
-            <p class="card-text">
-              {% if post.comments|length > 0 %}
-              <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
-                <small>View {{post.comments|length}} Comments</small>
-              </a>
-              {% else %}
-              <small class="text-muted">No Comments</small>
-              {% endif %}
-            </p>
-            <form class="input-group mb-3" id="comment" method="POST" action="/create-comment/{{post.id}}">
-              <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
-              <button type="submit" class="btn btn-primary">Comment</button>
-            </form>
           </div>
+
+          <!-- Footer section -->
+
           <div class="card-footer text-muted">
             <a data-bs-toggle="collapse" href="#comments-{{post.id}}" class="btn btn-light btn-sm"><i
                 class="fas fa-comment"></i>
