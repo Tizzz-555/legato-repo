@@ -10,25 +10,21 @@ body {
   }
 }
 
-#counter {
-  margin-right: 3px;
-  margin-left: 3px;"
-}
-
-
-
-#side-card {
-  position:sticky; 
-  top: 55px;
-}
-
-#posts {
-  padding-top: 20px;
-}
-
+/* ========
+Navbar
+======== */
 .navbar {
   --bs-navbar-padding-y: 0;
 }
+
+.navbar-nav {
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
 .navbar-brand {
   width: 150px;
   font-size: 24px;
@@ -41,48 +37,93 @@ body {
 }
 
 #navbarTogglerDemo02 {
-  margin-right: 0px; 
+  margin-right: 0px;
   margin-left: 65px;
   padding-left: 89px;
   padding-right: 0px;
 }
 
-.form.d-flex {
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.navbar-nav {
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-bottom: 10px;
-}
-.counter {
-  font-weight: bold;
-}
-
-.counter.disliked {
-  color: red;
-}
-
-.counter.liked {
-  color: rgb(115, 212, 115);
-}
-
 #nav-username {
-  color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   text-decoration: underline;
 }
 
-.form.d-flex {
-  margin-left: auto;
-  margin-right: auto;
+/* ========
+Card
+======== */
+
+/* Header */
+.card-header {
+  display: flex;
+  align-items: center;
 }
 
-.textual-content {
-  border: solid rgb(57, 53, 53) 1px;
-  border-radius: 5px;
-  padding: 0 1em;
+.card-header i {
+  font-size: 16px;
+  margin-right: 10px;
+  width: 24px;
+  text-align: center;
+}
+
+.card-header .counter {
+  font-size: 16px;
+  min-width: 20px;
+  text-align: center;
+  position: relative;
+  left: -6px;
+  font-weight: bold;
+}
+
+.card-header #legend {
+  right: 34px;
+  margin-left: 56px;
+  position: relative;
+}
+
+.fa-volume-low {
+  margin-right: 5px;
+  margin-left: 4px;
+  padding-right: 6px;
+}
+
+.fa-volume-high {
+  color: rgb(115, 212, 115);
+  margin-right: 5px;
+  margin-left: 4px;
+}
+
+.fa-volume-off {
+  margin-left: 1px;
+  min-width: 20px;
+  padding-right: 8px;
+}
+
+.fa-volume-xmark {
+  color: red;
+
+  margin-left: 1px;
+  min-width: 20px;
+}
+
+/* Body */
+.form.d-flex {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#side-card {
+  position: sticky;
+  top: 55px;
+}
+
+.posts {
+  padding-top: 20px;
+}
+
+.video-container {
+  margin: 10px auto;
+}
+
+video {
+  max-width: 100%;
 }

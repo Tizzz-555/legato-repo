@@ -5,7 +5,7 @@ Index
 {% endblock %}
 
 {% block main %}
-<div id="posts">
+<div class="posts">
 
   <div class="container">
     <div class="row">
@@ -19,26 +19,25 @@ Index
           <div class="card-header">
 
             {% if user.id in post.dislikes|map(attribute="author_id")|list %}
-            <i class="fa-solid fa-volume-xmark" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"
-              style="color:red"></i>
+            <i class="fa-solid fa-volume-xmark" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
             {% else %}
             <i class="fa-solid fa-volume-off" id="dislike-button-{{post.id}}" onclick="dislike({{post.id}})"></i>
             {% endif %}
 
-            <span id="counter-{{post.id}}"
-              class="counter {% if user.id in post.dislikes|map(attribute='author_id')|list %}disliked{% endif %}{% if user.id in post.likes|map(attribute='author_id')|list %}liked{% endif %}">
+
+            <span id="counter-{{post.id}}" class="counter">
               {{ post.likes|length - post.dislikes|length}}
             </span>
 
+
             {% if user.id in post.likes|map(attribute="author_id")|list %}
-            <i class="fa-solid fa-volume-high" id="like-button-{{post.id}}" onclick="like({{post.id}})"
-              style="color:rgb(115, 212, 115)"></i>
+            <i class="fa-solid fa-volume-high" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
             {% else %}
             <i class="fa-solid fa-volume-low" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
             {% endif %}
 
-            <span style="position:relative;margin-left: 30px;"><strong id="sub">le/Auditions ·</strong><span
-                class="text-muted" style="font-size: 10pt;"> Posted by
+            <span class="legend"><strong id="sub">le/Auditions ·</strong><span class="text-muted"
+                style="font-size: 10pt;"> Posted by
                 <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
                 {{ post.time_passed }}</span></span>
           </div>
@@ -52,8 +51,8 @@ Index
             </div>
             <br />
             {% if post.video %}
-            <div style="margin: 10px auto;">
-              <video style="width: 600px;" controls="controls" preload="preload">
+            <div class="video-container">
+              <video controls="controls" preload="preload">
                 <source src="static/{{post.video}}" type="video/mp4">
                 </source>
               </video>

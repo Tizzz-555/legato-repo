@@ -124,15 +124,6 @@ def posts(username):
     return render_template("posts.html", user=current_user, posts=posts, username=username)
 
 
-'''
-==================================================================
-==================================================================
-VIDEO
-==================================================================
-==================================================================
-'''
-
-
 @views.route("/upload-video/<post_id>", methods=["POST"])
 def upload_video(post_id):
     file = request.files["file"]
@@ -151,15 +142,6 @@ def upload_video(post_id):
     else:
         flash("No file selected for upload", category="error")
         return redirect(url_for("views.index"))
-
-
-'''
-==================================================================
-==================================================================
-END OF VIDEO
-==================================================================
-==================================================================
-'''
 
 
 @views.route("/create-comment/<post_id>", methods=["POST"])
