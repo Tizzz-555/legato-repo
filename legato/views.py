@@ -93,14 +93,34 @@ def delete_post(id):
 
     # Query post filtering by the id number in the url
     post = Post.query.filter_by(id=id).first()
-
+    comments = Comment.query.filter_by(post_id=post.id).all()
+    likes = Like.query.filter_by(post_id=post.id).all()
+    dislikes = Dislike.query.filter_by(post_id=post.id).all()
     if not post:
         flash("Post does not exist", category="error")
     elif current_user.id != post.author_id:
         flash("You do not have permission to delete this post", category="error")
     else:
+        # Delete all comments associated with the post
+        for comment in comments:
+            db.session.delete(comment)
+        # Delete all likes associated with the post
+        for like in likes:
+            db.session.delete(like)
+        # Delete all dislikes associated with the post
+        for dislike in dislikes:
+            db.session.delete(dislike)
         # Delete post from database
         db.session.delete(post)
+        # Delete the file associated with the post if it exists
+        if post.video:
+            # Get file path by splitting the post.video at the slash and getting the last component (the file name)
+            # Join to the UPLOAD_FOLDER var to get the full path
+            file_path = os.path.join(UPLOAD_FOLDER, post.video.split('/')[-1])
+            if os.path.exists(file_path):
+                # Delete the file from the server
+                os.remove(file_path)
+
         db.session.commit()
         flash("post deleted", category="success")
 
@@ -111,11 +131,18 @@ def delete_post(id):
 def upload_video(post_id):
     # Request file from the form
     file = request.files["file"]
+
     if file:
-        # Pass filename through secure_filename
-        filename = secure_filename(file.filename)
+        # Create unique filenames based off post_id and pass filename through secure_filename
+        filename = "post_id_" + post_id + "_" + secure_filename(file.filename)
         # Create file path adding filename to uploads folder
         file_path = os.path.join(UPLOAD_FOLDER, filename)
+        # Check if file_path already exists
+        if os.path.exists(file_path):
+            flash(
+                "A file with this name already exists. Please change your file name.", category="error")
+            return redirect(url_for("views.index"))
+
         file.save(file_path)
 
         # Query post filtered by id
