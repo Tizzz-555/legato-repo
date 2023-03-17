@@ -107,6 +107,31 @@ def delete_post(id):
     return redirect(url_for("views.index"))
 
 
+@views.route("/upload-video/<post_id>", methods=["POST"])
+def upload_video(post_id):
+    # Request file from the form
+    file = request.files["file"]
+    if file:
+        # Pass filename through secure_filename
+        filename = secure_filename(file.filename)
+        # Create file path adding filename to uploads folder
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(file_path)
+
+        # Query post filtered by id
+        post = Post.query.filter_by(id=post_id).first()
+        if post:
+            # Update database with path and filename
+            post.video = os.path.join('uploads', filename)
+            db.session.commit()
+            return redirect(url_for("views.index"))
+        else:
+            flash("Post does not exist", category="error")
+    else:
+        flash("No file selected for upload", category="error")
+        return redirect(url_for("views.index"))
+
+
 @views.route("/posts/<username>")
 @login_required
 def posts(username):
@@ -122,26 +147,6 @@ def posts(username):
     # Store only the posts from the current user in the posts variable
     posts = user.posts
     return render_template("posts.html", user=current_user, posts=posts, username=username)
-
-
-@views.route("/upload-video/<post_id>", methods=["POST"])
-def upload_video(post_id):
-    file = request.files["file"]
-    if file:
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(file_path)
-
-        post = Post.query.filter_by(id=post_id).first()
-        if post:
-            post.video = os.path.join('uploads', filename)
-            db.session.commit()
-            return redirect(url_for("views.index"))
-        else:
-            flash("Post does not exist", category="error")
-    else:
-        flash("No file selected for upload", category="error")
-        return redirect(url_for("views.index"))
 
 
 @views.route("/create-comment/<post_id>", methods=["POST"])

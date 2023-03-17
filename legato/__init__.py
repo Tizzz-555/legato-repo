@@ -6,6 +6,7 @@ from .config import SECRET_KEY
 
 # Create a new SQLAlchemy object stored into db variable
 db = SQLAlchemy()
+# Path for uploads
 UPLOAD_FOLDER = os.path.join(os.path.abspath(
     os.path.dirname(__file__)), 'static/uploads')
 
@@ -18,8 +19,10 @@ def create_app():
     app.config['SECRET_KEY'] = SECRET_KEY
     # Set database configuration var
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(os.getcwd(), 'database.db')}"
+    # Set upload folder
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-    app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
+    # Set uploads maximum size
+    app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
     # Initialize db object with the app instance
     db.init_app(app)
 
