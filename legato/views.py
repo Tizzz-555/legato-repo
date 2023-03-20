@@ -98,6 +98,7 @@ def delete_post(id):
     dislikes = Dislike.query.filter_by(post_id=post.id).all()
     if not post:
         flash("Post does not exist", category="error")
+    # Check if the current user is the author of the post
     elif current_user.id != post.author_id:
         flash("You do not have permission to delete this post", category="error")
     else:
@@ -122,7 +123,7 @@ def delete_post(id):
                 os.remove(file_path)
 
         db.session.commit()
-        flash("post deleted", category="success")
+        flash("Post deleted", category="success")
 
     return redirect(url_for("views.index"))
 
@@ -134,7 +135,7 @@ def upload_video(post_id):
 
     if file:
         # Create unique filenames based off post_id and pass filename through secure_filename
-        filename = "post_id_" + post_id + "_" + secure_filename(file.filename)
+        filename = "post_id-" + post_id + "-" + secure_filename(file.filename)
         # Create file path adding filename to uploads folder
         file_path = os.path.join(UPLOAD_FOLDER, filename)
         # Check if file_path already exists

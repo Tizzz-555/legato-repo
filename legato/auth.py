@@ -33,7 +33,7 @@ def login():
                 flash('Password is incorrect.', category='error')
         else:
             # if email does not exist in database, flash an error message
-            flash('Email does not exist.', category='error')
+            flash('Username does not exist.', category='error')
     # if a GET request is received, render the login page
     return render_template("login.html", user=current_user)
 
