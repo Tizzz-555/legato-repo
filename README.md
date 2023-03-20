@@ -194,7 +194,7 @@ Similarly to the like and dislike routes in Flask, the challenge was finding a w
 
 ## Youtube presentation
 
-Here is youtube [link](https://youtu.be/0Xd4IVIABoU) to my video presentation
+Here is a youtube [link](https://youtu.be/0Xd4IVIABoU) to my video presentation
 
 ## Documentation
 
