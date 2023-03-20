@@ -12,7 +12,7 @@ The inspiration for this project came from [this tutorial](https://github.com/te
 
 ## Abstract
 
-My final project is a prototype of a blog / social network aimed to musicians looking to share their video recordings with a community of peers and get feedback on it.
+My final project is a blog / social network protoype, aimed for musicians looking to share their video recordings with a community of peers and get feedback on it.
 
 All the backend is stored on Sqlite3 except for the video files upoloads, which for memory reasons I only stored the path of.
 
@@ -186,7 +186,7 @@ return jsonify({"votes": len(post.likes) - len(post.dislikes), "liked": current_
 
 ## Index.js
 
-While the focus of the project is on Python and Flask, for the like and dislike buttons I decided to use some Javascript to make them more responsive and avoiding refreshing the page with each vote.
+While the focus of the project is on Python and Flask, for the like and dislike buttons I decided to use some Javascript to make them more responsive and to avoid refreshing the page with each vote.
 
 Similarly to the like and dislike routes in Flask, the challenge was finding a way to handle like, removing a like by pressing again the same button, or directly change from like to dislike clicking the dislike button from a like.
 
@@ -194,7 +194,7 @@ Similarly to the like and dislike routes in Flask, the challenge was finding a w
 
 ## Youtube presentation
 
-Here is youtube [link](https://youtu.be/0Xd4IVIABoU) to my video presentation
+Here is a youtube [link](https://youtu.be/0Xd4IVIABoU) to my video presentation
 
 ## Documentation
 
