@@ -12,7 +12,7 @@ The inspiration for this project came from [this tutorial](https://github.com/te
 
 ## Abstract
 
-My final project is a blog / social network protoype, aimed for musicians looking to share their video recordings with a community of peers and get feedback on it.
+My final project is a blog / social network prototype, aimed for musicians looking to share their video recordings with a community of peers and get feedback on it.
 
 All the backend is stored on Sqlite3 except for the video files upoloads, which for memory reasons I only stored the path of.
 
